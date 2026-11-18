@@ -1,0 +1,46 @@
+erDiagram
+    Factory_Line ||--o{ Machines_In_World : "contain"
+    Machine_Types ||--o{ Machines_In_World : "define type"
+    Recipes ||--o{ Machines_In_World : "used on"
+    Recipes ||--|{ Recipe_Items : "contain"
+    Items ||--o{ Recipe_Items : "included in"
+
+    Factory_Line {
+        uuid id PK
+        varchar(50) location
+        varchar(50) factory_line_name "UNIQUE"
+    }
+
+    Machine_Types {
+        int id PK 
+        varchar(50) machine_name "UNIQUE"
+        int energy_production
+    }
+
+    Machines_In_World {
+        uuid id PK 
+        int machine_id FK 
+        int recipe_id FK 
+        uuid factory_line_id FK 
+        numeric craft_speed_mult
+        numeric energy_consume_mult
+    }
+
+    Recipes {
+        int id PK
+        varchar(50) name "UNIQUE"
+        numeric base_craft_time
+        int req_energy
+    }
+
+    Items {
+        int id PK
+        varchar(50) name "UNIQUE"
+    }
+
+    Recipe_Items {
+        int recipe_id PK,FK
+        int item_id PK,FK
+        boolean is_input PK
+        int quantity
+    }
